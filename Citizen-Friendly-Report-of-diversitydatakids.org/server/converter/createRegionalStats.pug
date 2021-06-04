@@ -1,0 +1,24 @@
+include synonyms
+
+mixin percent 
+    if(NLG.Scale[0] === 'Percent')
+        |%
+    if(NLG.Scale[0]=== 'Dollar')
+        |$
+
+p
+    | In #{filter}, #[+Average] #{NLG.Scale[0]} of #{NLG.Title} is #{parseFloat(total).toFixed(2)} #[+percent] 
+    | with #{regMax} #[+percent] & #{regMin} #[+percent] as the #[+highest] and the #[+lowest] values.
+    if(min !== -1)
+        |Overall, the
+        eachz el in maxArray with {separator:',', last_separator:'and'}
+            | #{el} 
+        | have #[+recorded] the highest #[+Average] of #{parseFloat(max).toFixed(2)} #[+percent]
+        eachz el in minArray with {separator:',', last_separator:'and'}
+            | #{el}
+        | have #[+recorded] the lowest #[+Average] value of #{parseFloat(min).toFixed(2)} #[+percent] in this #[+region]. 
+    else 
+        |. 
+
+    
+    

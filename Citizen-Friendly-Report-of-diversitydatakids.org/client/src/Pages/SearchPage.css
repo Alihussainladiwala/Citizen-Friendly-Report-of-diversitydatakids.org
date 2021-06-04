@@ -1,0 +1,14 @@
+.body-image {
+  width: 40vw;
+  height: 60vh;
+}
+
+.font-style {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.close {
+  text-align: right;
+  cursor: pointer;
+}

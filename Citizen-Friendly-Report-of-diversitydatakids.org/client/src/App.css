@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.grid-header{
+  background-color:lightsalmon;
+  font-weight:700;
+  font-family: "Arial Black", Arial, sans-serif;
+}
+.MuiDataGrid-root .MuiDataGrid-colCellTitle{
+  font-weight: 700 !important;
+}
+.InovuaReactDataGrid__column-header{
+  background-color:lightsalmon;
+  color:black;
+}
+.MuiToolbar-regular{
+  min-height: 48px !important;
+}
+.Headings{
+  color: #d8900e;
+    font-weight: 700;
+}
+* {-webkit-font-smoothing: antialiased;}

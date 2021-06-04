@@ -1,0 +1,3 @@
+- run npm install in client & server folders. 
+- client: npm start
+- server: node server.js

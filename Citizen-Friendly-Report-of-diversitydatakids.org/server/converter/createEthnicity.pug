@@ -1,0 +1,123 @@
+include synonyms
+
+
+mixin rest
+    | Of the remaining races #race# has #count# 
+
+mixin zero 
+    | For the 
+    eachz el in zeroArray with {separator:',', last_separator:'and'}
+         | #{el}
+    | entries in the dataset are #[+recorded] as 0. 
+
+mixin unknown 
+    | Entries in the dataset are #[+recorded] as null   
+    | for the [
+    eachz el in unknownArray with {separator:',', last_separator:'and'}
+         | #{el}
+    | ] 
+    if(unknownArray.length > 1)
+        | communities 
+    else 
+        | community
+
+mixin percent 
+    if(NLG.Scale[0] === 'Percent')
+        |%
+    if(NLG.Scale[0]=== 'Dollar')
+        |$
+
+mixin intro
+    //- | In the #{info.name.data} 
+    if(info.year.data.includes("-"))
+        | #[+multiYear]
+    else 
+        | #[+singleYear]
+    | #{info.year.data}
+
+mixin numericValue 
+    if(info.total_est.data === null || info.total_est.data === undefined)
+        | not #[+recorded]
+    else 
+        | #{info.total_est.data} #[+percent]
+
+mixin header 
+    | #{NLG.Title}
+
+mixin min 
+    eachz el in minArray with {separator:',', last_separator:'and'}
+         | #{el}
+    if(minArray.length > 1)
+        | have 
+    else
+        | has
+    | #[+recorded] the lowest value of #{min} 
+    | #[+percent]
+    | .
+
+mixin max 
+    eachz el in maxArray with {separator:',', last_separator:'and'}
+         | #{el}
+    if(maxArray.length > 1)
+        | have 
+    else
+        | has
+    | #[+recorded] the highest value of #{max} 
+    | #[+percent]
+    | .
+
+mixin minMax 
+    | The
+    eachz el in minArray with {separator:',', last_separator:'and'}
+         | #{el}
+    if(minArray.length > 1)
+        | have 
+    else
+        | has
+    | #[+recorded] the values of #{max} 
+    | #[+percent]
+    | .
+
+mixin total
+    | the total #{NLG.Scale[0]} of #[+header] 
+    | is #[+numericValue]
+
+mixin avg 
+    if(avg)
+        | with #[+anAverage] value of #{avg} for #[+different] #[+races]
+
+mixin compare 
+    if(stats && stats.avg !== -1 && (info.total_est.data !== null))
+        if(info.total_est.data > stats.avg)
+            | this #{NLG.Scale[0]} is #[+greater] than all the #{resourceName.split("(")[0]} #[+Average]
+            | by a value of #{parseFloat(info.total_est.data - stats.avg).toFixed(2)} #[+percent].
+        if(info.total_est.data < stats.avg)
+            | this #{NLG.Scale[0]} is #[+lower] than all the #{resourceName.split("(")[0]} #[+Average]
+            | by a value of #{parseFloat(stats.avg - info.total_est.data).toFixed(2)} #[+percent].
+        if(info.total_est.data === stats.avg) 
+            | this #{NLG.Scale[0]} is same as all the #{resourceName.split("(")[0]} #[+Average].
+
+//- ----------------------------------
+
+p
+    | #[+intro]
+    | #[+total]
+    | #[+avg].
+    | #[+compare]
+    if((minArray && minArray.length > 0) || (maxArray && maxArray.length > 0) && min !== max )
+        if(maxArray && maxArray.length > 0)
+            | #[+AmongThem]
+            | #[+max]
+        if(minArray && minArray.length > 0)
+            | Whereas
+            | #[+min]
+    if(minArray && minArray.length > 0 && min === max)
+        | #[+minMax]
+    
+    //- if(zeroArray && zeroArray.length>0)
+    //-     | #[+zero]
+    //- if(unknownArray && unknownArray.length>0)
+    //-     | #[+unknown]
+        
+        
+//- | #[+rest]
